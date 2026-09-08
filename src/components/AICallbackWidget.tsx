@@ -18,11 +18,48 @@ export default function AICallbackWidget() {
     email: "",
     query: "",
   });
+  const [errors, setErrors] = useState<{
+    name?: string;
+    phone?: string;
+    email?: string;
+  }>({});
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<{
     type: "success" | "error" | null;
     message: string;
   }>({ type: null, message: "" });
+
+  const validate = (data: typeof formData) => {
+    const nextErrors: { name?: string; phone?: string; email?: string } = {};
+
+    const name = data.name.trim();
+    if (!name) {
+      nextErrors.name = "Please enter your full name.";
+    } else if (name.length < 2) {
+      nextErrors.name = "Name must be at least 2 characters.";
+    } else if (!/^[a-zA-Z][a-zA-Z\s.'-]*$/.test(name)) {
+      nextErrors.name = "Name can only contain letters, spaces, . ' and -";
+    }
+
+    if (!data.phone) {
+      nextErrors.phone = "Please enter your phone number.";
+    } else if (data.phone.length !== 10) {
+      nextErrors.phone = "Phone number must be 10 digits.";
+    } else if (!/^[6-9]\d{9}$/.test(data.phone)) {
+      nextErrors.phone = "Please enter a valid Indian mobile number.";
+    }
+
+    const email = data.email.trim();
+    if (email && !/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(email)) {
+      nextErrors.email = "Please enter a valid email address.";
+    }
+
+    return nextErrors;
+  };
+
+  // Letters, numbers, whitespace and everyday punctuation only.
+  // Blocks code-ish characters such as < > { } [ ] | \ ` ^ ~ * = $
+  const DISALLOWED_MESSAGE_CHARS = /[^a-zA-Z0-9\s,.'"()\-_/&@:;!?+#%]/g;
 
   useEffect(() => {
     const handleOpen = () => setIsOpen(true);
@@ -34,6 +71,7 @@ export default function AICallbackWidget() {
 
   const handleClose = () => {
     setIsOpen(false);
+    setErrors({});
     setStatus({ type: null, message: "" });
   };
 
@@ -41,11 +79,9 @@ export default function AICallbackWidget() {
     e.preventDefault();
     setStatus({ type: null, message: "" });
 
-    if (!formData.name.trim() || !formData.phone.trim()) {
-      setStatus({
-        type: "error",
-        message: "Please enter your Name and Phone number.",
-      });
+    const nextErrors = validate(formData);
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) {
       return;
     }
 
@@ -53,7 +89,7 @@ export default function AICallbackWidget() {
 
     const result = await submitAICallback({
       name: formData.name.trim(),
-      phone: formData.phone.trim(),
+      phone: `+91${formData.phone}`,
       your_email: formData.email.trim(),
       query: formData.query.trim(),
     });
@@ -66,6 +102,7 @@ export default function AICallbackWidget() {
         message: result.message || "Thank you! We'll call you shortly.",
       });
       setFormData({ name: "", phone: "", email: "", query: "" });
+      setErrors({});
     } else {
       setStatus({
         type: "error",
@@ -139,26 +176,93 @@ export default function AICallbackWidget() {
                   id="widget-name"
                   type="text"
                   required
+                  maxLength={50}
                   placeholder="e.g. Jane Smith"
+                  aria-invalid={Boolean(errors.name)}
+                  aria-describedby={errors.name ? "widget-name-error" : undefined}
+                  className={errors.name ? styles.inputError : undefined}
                   value={formData.name}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, name: e.target.value }))
-                  }
+                  onChange={(e) => {
+                    setFormData((prev) => ({ ...prev, name: e.target.value }));
+                    setErrors((prev) => ({ ...prev, name: undefined }));
+                  }}
                 />
+                {errors.name && (
+                  <span id="widget-name-error" className={styles.fieldError}>
+                    {errors.name}
+                  </span>
+                )}
               </div>
 
               <div className={styles.field}>
                 <label htmlFor="widget-phone">Phone Number *</label>
-                <input
-                  id="widget-phone"
-                  type="tel"
-                  required
-                  placeholder="e.g. +91 9876543210"
-                  value={formData.phone}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, phone: e.target.value }))
-                  }
-                />
+                <div
+                  className={`${styles.phoneWrapper} ${errors.phone ? styles.inputError : ""}`}
+                >
+                  <span className={styles.phonePrefix} aria-hidden="true">
+                    +91
+                  </span>
+                  <input
+                    id="widget-phone"
+                    type="tel"
+                    required
+                    inputMode="numeric"
+                    autoComplete="tel-national"
+                    maxLength={10}
+                    pattern="[0-9]{10}"
+                    placeholder="9876543210"
+                    aria-invalid={Boolean(errors.phone)}
+                    aria-describedby={
+                      errors.phone ? "widget-phone-error" : undefined
+                    }
+                    value={formData.phone}
+                    onKeyDown={(e) => {
+                      const allowedKeys = [
+                        "Backspace",
+                        "Delete",
+                        "Tab",
+                        "Enter",
+                        "Escape",
+                        "Home",
+                        "End",
+                        "ArrowLeft",
+                        "ArrowRight",
+                        "ArrowUp",
+                        "ArrowDown",
+                      ];
+                      if (
+                        allowedKeys.includes(e.key) ||
+                        e.ctrlKey ||
+                        e.metaKey
+                      ) {
+                        return;
+                      }
+                      if (!/^[0-9]$/.test(e.key)) {
+                        e.preventDefault();
+                      }
+                    }}
+                    onPaste={(e) => {
+                      e.preventDefault();
+                      const digits = e.clipboardData
+                        .getData("text")
+                        .replace(/\D/g, "")
+                        .slice(0, 10);
+                      if (!digits) return;
+                      setFormData((prev) => ({ ...prev, phone: digits }));
+                      setErrors((prev) => ({ ...prev, phone: undefined }));
+                    }}
+                    onChange={(e) => {
+                      const digits = e.target.value.replace(/\D/g, "").slice(0, 10);
+                      setFormData((prev) => ({ ...prev, phone: digits }));
+                      setErrors((prev) => ({ ...prev, phone: undefined }));
+                    }}
+                  />
+                </div>
+                {errors.phone && (
+                  <span id="widget-phone-error" className={styles.fieldError}>
+                    {errors.phone}
+                  </span>
+                )}
               </div>
 
               <div className={styles.field}>
@@ -166,24 +270,44 @@ export default function AICallbackWidget() {
                 <input
                   id="widget-email"
                   type="email"
+                  maxLength={100}
                   placeholder="e.g. jane@example.com"
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, email: e.target.value }))
+                  aria-invalid={Boolean(errors.email)}
+                  aria-describedby={
+                    errors.email ? "widget-email-error" : undefined
                   }
+                  className={errors.email ? styles.inputError : undefined}
+                  value={formData.email}
+                  onChange={(e) => {
+                    setFormData((prev) => ({ ...prev, email: e.target.value }));
+                    setErrors((prev) => ({ ...prev, email: undefined }));
+                  }}
                 />
+                {errors.email && (
+                  <span id="widget-email-error" className={styles.fieldError}>
+                    {errors.email}
+                  </span>
+                )}
               </div>
 
               <div className={styles.field}>
                 <label htmlFor="widget-query">Message / Property Preference (Optional)</label>
                 <textarea
                   id="widget-query"
+                  maxLength={500}
                   placeholder="e.g. Interested in 3 BHK in Hebbal..."
                   value={formData.query}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, query: e.target.value }))
-                  }
+                  onChange={(e) => {
+                    const cleaned = e.target.value
+                      .replace(DISALLOWED_MESSAGE_CHARS, "")
+                      .slice(0, 500);
+                    setFormData((prev) => ({ ...prev, query: cleaned }));
+                  }}
                 />
+                <span className={styles.fieldHint}>
+                  {formData.query.length}/500 &middot; letters, numbers and
+                  basic punctuation only
+                </span>
               </div>
 
               <button
