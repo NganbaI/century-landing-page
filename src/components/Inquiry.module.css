@@ -158,6 +158,64 @@
   border-bottom-color: var(--crimson);
 }
 
+.phoneWrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 48px;
+  border-bottom: 1px solid rgba(22, 35, 43, 0.5);
+}
+
+.phoneWrapper:focus-within {
+  border-bottom-color: var(--crimson);
+}
+
+.phonePrefix {
+  flex-shrink: 0;
+  padding-right: 8px;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.2;
+  user-select: none;
+}
+
+.phoneWrapper input {
+  flex: 1;
+  min-width: 0;
+  border-bottom: 0;
+}
+
+.phoneWrapper input:focus {
+  border-bottom: 0;
+}
+
+.field .inputError,
+.phoneWrapper.inputError {
+  border-bottom-color: #dc2626;
+}
+
+.field .inputError:focus,
+.phoneWrapper.inputError:focus-within {
+  border-bottom-color: #dc2626;
+}
+
+.fieldError {
+  display: block;
+  margin-top: 4px;
+  color: #b91c1c;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.fieldHint {
+  display: block;
+  margin-top: 4px;
+  color: rgba(4, 19, 25, 0.54);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
 .submit {
   width: 100%;
   height: 53px;
