@@ -1,7 +1,60 @@
+"use client";
+
 import Image from "next/image";
+import { useState, FormEvent } from "react";
+import { submitAICallback } from "@/services/aiCallback";
 import styles from "./Inquiry.module.css";
 
 export default function Inquiry() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({ type: null, message: "" });
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus({ type: null, message: "" });
+
+    if (!formData.name.trim() || !formData.phone.trim()) {
+      setStatus({
+        type: "error",
+        message: "Please fill out required fields (Name and Phone).",
+      });
+      return;
+    }
+
+    setLoading(true);
+
+    const result = await submitAICallback({
+      name: formData.name.trim(),
+      phone: formData.phone.trim(),
+      your_email: formData.email.trim(),
+      query: formData.message.trim(),
+    });
+
+    setLoading(false);
+
+    if (result.success) {
+      setStatus({
+        type: "success",
+        message: result.message || "Thank you! We'll call you shortly.",
+      });
+      setFormData({ name: "", email: "", phone: "", message: "" });
+    } else {
+      setStatus({
+        type: "error",
+        message: result.message || "Something went wrong. Please try again.",
+      });
+    }
+  };
+
   return (
     <section className={styles.section} id="contact">
       <div className={styles.backdrop} aria-hidden="true">
@@ -43,30 +96,81 @@ export default function Inquiry() {
               options
             </p>
 
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={handleSubmit}>
               <label className={styles.field}>
-                <span className={styles.label}>Name</span>
-                <input type="text" name="name" placeholder="Jane Smith" />
+                <span className={styles.label}>Name *</span>
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  placeholder="Jane Smith"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, name: e.target.value }))
+                  }
+                />
               </label>
 
               <label className={styles.field}>
                 <span className={styles.label}>Email</span>
-                <input type="email" name="email" placeholder="jane@email.com" />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="jane@email.com"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, email: e.target.value }))
+                  }
+                />
               </label>
 
               <label className={styles.field}>
-                <span className={styles.label}>Phone</span>
-                <input type="tel" name="phone" placeholder="+91 9876 564532" />
+                <span className={styles.label}>Phone *</span>
+                <input
+                  type="tel"
+                  name="phone"
+                  required
+                  placeholder="+91 9876543210"
+                  value={formData.phone}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, phone: e.target.value }))
+                  }
+                />
               </label>
 
               <label className={styles.field}>
                 <span className={styles.label}>Message</span>
-                <textarea name="message" rows={4} placeholder="Tell us about" />
+                <textarea
+                  name="message"
+                  rows={4}
+                  placeholder="Tell us about what you are looking for"
+                  value={formData.message}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, message: e.target.value }))
+                  }
+                />
               </label>
 
-              <button type="submit" className={styles.submit}>
-                Submit
+              <button
+                type="submit"
+                className={styles.submit}
+                disabled={loading}
+              >
+                {loading ? "Scheduling Call..." : "Submit"}
               </button>
+
+              {status.type && (
+                <div
+                  className={`${styles.statusMessage} ${
+                    status.type === "success"
+                      ? styles.statusSuccess
+                      : styles.statusError
+                  }`}
+                  role="alert"
+                >
+                  {status.message}
+                </div>
+              )}
             </form>
           </div>
         </div>

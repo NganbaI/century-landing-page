@@ -8,6 +8,7 @@ import CityMap from "@/components/CityMap";
 import Awards from "@/components/Awards";
 import Inquiry from "@/components/Inquiry";
 import Footer from "@/components/Footer";
+import AICallbackWidget from "@/components/AICallbackWidget";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -27,6 +28,7 @@ export default function Home() {
           <Footer />
         </div>
       </main>
+      <AICallbackWidget />
     </>
   );
 }
