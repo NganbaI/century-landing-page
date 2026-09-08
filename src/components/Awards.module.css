@@ -5,6 +5,19 @@
   margin-top: 98px;
 }
 
+/* The scatter uses raw Figma coordinates, so both it and the heading are
+   anchored to one 1440-wide stage centred in the viewport. Without this the
+   cards hug the left edge on screens wider than 1440 while the heading
+   centres on the viewport. */
+.stage {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1440px;
+  height: 100%;
+  margin-left: -720px;
+}
+
 .scatter {
   position: absolute;
   inset: 0;
@@ -52,21 +65,20 @@
   white-space: nowrap;
 }
 
-@media (max-width: 1440px) {
-  .scatter {
-    left: 50%;
-    width: 1440px;
-    margin-left: -720px;
-  }
-}
-
 @media (max-width: 1100px) {
   .section {
-    display: flex;
-    flex-direction: column;
     height: auto;
     margin-top: 72px;
     padding: 0 var(--gutter);
+  }
+
+  .stage {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    margin-left: 0;
   }
 
   .scatter {

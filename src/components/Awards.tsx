@@ -29,22 +29,26 @@ const AWARDS = [
 export default function Awards() {
   return (
     <section className={styles.section} aria-labelledby="awards-heading">
-      <div className={styles.scatter}>
-        {AWARDS.map((award) => (
-          <article
-            key={award.title}
-            className={styles.card}
-            style={{ "--x": `${award.x}px`, "--y": `${award.y}px` } as React.CSSProperties}
-          >
-            <h3 className={`serif ${styles.cardTitle}`}>{award.title}</h3>
-            <p className={`serif-italic ${styles.cardMeta}`}>{award.meta}</p>
-          </article>
-        ))}
-      </div>
+      <div className={styles.stage}>
+        <div className={styles.scatter}>
+          {AWARDS.map((award) => (
+            <article
+              key={award.title}
+              className={styles.card}
+              style={
+                { "--x": `${award.x}px`, "--y": `${award.y}px` } as React.CSSProperties
+              }
+            >
+              <h3 className={`serif ${styles.cardTitle}`}>{award.title}</h3>
+              <p className={`serif-italic ${styles.cardMeta}`}>{award.meta}</p>
+            </article>
+          ))}
+        </div>
 
-      <h2 id="awards-heading" className={`serif ${styles.heading}`}>
-        Recognised for Excellence
-      </h2>
+        <h2 id="awards-heading" className={`serif ${styles.heading}`}>
+          Recognised for Excellence
+        </h2>
+      </div>
     </section>
   );
 }
