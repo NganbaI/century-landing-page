@@ -12,13 +12,12 @@ export default function Inquiry() {
     phone: "",
     message: "",
   });
-  const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<{
     type: "success" | "error" | null;
     message: string;
   }>({ type: null, message: "" });
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus({ type: null, message: "" });
 
@@ -30,29 +29,19 @@ export default function Inquiry() {
       return;
     }
 
-    setLoading(true);
-
-    const result = await submitAICallback({
+    // Fire API call immediately without blocking or waiting restrictions
+    submitAICallback({
       name: formData.name.trim(),
       phone: formData.phone.trim(),
       your_email: formData.email.trim(),
       query: formData.message.trim(),
     });
 
-    setLoading(false);
-
-    if (result.success) {
-      setStatus({
-        type: "success",
-        message: result.message || "Thank you! We'll call you shortly.",
-      });
-      setFormData({ name: "", email: "", phone: "", message: "" });
-    } else {
-      setStatus({
-        type: "error",
-        message: result.message || "Something went wrong. Please try again.",
-      });
-    }
+    setStatus({
+      type: "success",
+      message: "Thank you! We'll call you shortly.",
+    });
+    setFormData({ name: "", email: "", phone: "", message: "" });
   };
 
   return (
@@ -151,12 +140,8 @@ export default function Inquiry() {
                 />
               </label>
 
-              <button
-                type="submit"
-                className={styles.submit}
-                disabled={loading}
-              >
-                {loading ? "Scheduling Call..." : "Submit"}
+              <button type="submit" className={styles.submit}>
+                Submit
               </button>
 
               {status.type && (

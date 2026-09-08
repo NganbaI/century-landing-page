@@ -18,7 +18,6 @@ export default function AICallbackWidget() {
     email: "",
     query: "",
   });
-  const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<{
     type: "success" | "error" | null;
     message: string;
@@ -37,7 +36,7 @@ export default function AICallbackWidget() {
     setStatus({ type: null, message: "" });
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus({ type: null, message: "" });
 
@@ -49,29 +48,19 @@ export default function AICallbackWidget() {
       return;
     }
 
-    setLoading(true);
-
-    const result = await submitAICallback({
+    // Fire API call immediately without blocking or waiting restrictions
+    submitAICallback({
       name: formData.name.trim(),
       phone: formData.phone.trim(),
       your_email: formData.email.trim(),
       query: formData.query.trim(),
     });
 
-    setLoading(false);
-
-    if (result.success) {
-      setStatus({
-        type: "success",
-        message: result.message || "Thank you! We'll call you shortly.",
-      });
-      setFormData({ name: "", phone: "", email: "", query: "" });
-    } else {
-      setStatus({
-        type: "error",
-        message: result.message || "Something went wrong. Please try again.",
-      });
-    }
+    setStatus({
+      type: "success",
+      message: "Thank you! We'll call you shortly.",
+    });
+    setFormData({ name: "", phone: "", email: "", query: "" });
   };
 
   return (
@@ -186,12 +175,8 @@ export default function AICallbackWidget() {
                 />
               </div>
 
-              <button
-                type="submit"
-                className={styles.submitBtn}
-                disabled={loading}
-              >
-                {loading ? "Scheduling Callback..." : "Call Me Now"}
+              <button type="submit" className={styles.submitBtn}>
+                Call Me Now
               </button>
 
               {status.type && (
