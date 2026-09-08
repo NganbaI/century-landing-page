@@ -1,0 +1,18 @@
+/* Figma node 5:2406 "Content" — cream slab that overlaps the hero
+   by 59px and rounds its top corners. */
+.content {
+  position: relative;
+  z-index: 2;
+  margin-top: -59px;
+  background: var(--cream);
+  border-top-left-radius: 48px;
+  border-top-right-radius: 48px;
+}
+
+@media (max-width: 900px) {
+  .content {
+    margin-top: -40px;
+    border-top-left-radius: 32px;
+    border-top-right-radius: 32px;
+  }
+}

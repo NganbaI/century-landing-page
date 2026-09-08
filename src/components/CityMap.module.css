@@ -1,0 +1,342 @@
+/* Figma node 5:2618 "City Map Section" — 1440 x 900, clipped. */
+.section {
+  position: relative;
+  min-height: 900px;
+  margin-top: 26.5px;
+  padding: 174.94px 72px 176.06px;
+  border-bottom: 1.125px solid var(--grey);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+/* Figma renders the 1408x768 map at 148.09% x 129.28% of the section,
+   offset left -31.64% / top -19.81%. */
+/* Figma renders the 1408x768 map at 148.09% x 129.28% of the section, offset
+   left -31.64% / top -19.81%. !important beats next/image's inline `fill`
+   geometry. */
+.map {
+  left: -31.64% !important;
+  top: -19.81% !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 148.09% !important;
+  height: 129.28% !important;
+  max-width: none;
+  object-fit: cover;
+  opacity: 0.3;
+  filter: saturate(0);
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(23, 19, 12, 0.8);
+}
+
+.inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 27px;
+  max-width: 1296px;
+}
+
+.copyColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 27px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.heading {
+  color: #fff;
+  font-size: 54px;
+  letter-spacing: -0.54px;
+  line-height: 63px;
+}
+
+.body {
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: -0.84px;
+  line-height: 1.4;
+}
+
+.regions {
+  display: flex;
+  flex-direction: column;
+  gap: 27px;
+  padding-top: 27px;
+}
+
+.region {
+  display: flex;
+  align-items: center;
+}
+
+.marker {
+  flex: none;
+  display: grid;
+  place-content: center;
+  width: 54px;
+  height: 54px;
+  border: 1.125px solid var(--grey);
+  border-radius: 50%;
+  color: var(--sand);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.marker[data-active="true"] {
+  background: var(--sand);
+  color: var(--ink-deep);
+}
+
+.region > span:last-child {
+  padding-left: 18px;
+}
+
+.regionName {
+  display: block;
+  color: var(--sand);
+  font-size: 13.5px;
+  letter-spacing: 1.35px;
+  line-height: 18px;
+  text-transform: uppercase;
+}
+
+.regionNote {
+  display: block;
+  color: var(--silver);
+  font-size: 12.375px;
+  line-height: 15.75px;
+}
+
+/* Figma node 5:2655 — abstract map markers. */
+.plot {
+  position: relative;
+  flex: none;
+  width: 504px;
+  height: 549px;
+}
+
+.pin {
+  position: absolute;
+  left: 67.32%;
+  top: 20%;
+  width: 13.5px;
+  height: 13.5px;
+  border-radius: 50%;
+  background: var(--sand);
+  filter: drop-shadow(0 0 8.438px rgba(234, 225, 213, 0.5));
+}
+
+.pinRing {
+  position: absolute;
+  left: -11.25px;
+  top: -11.25px;
+  width: 36px;
+  height: 36px;
+  border: 1.125px solid rgba(234, 225, 213, 0.3);
+  border-radius: 50%;
+}
+
+.dotA,
+.dotB {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--grey);
+}
+
+.dotA {
+  left: 38.21%;
+  top: 50%;
+}
+
+.dotB {
+  left: 78.22%;
+  top: 60%;
+}
+
+/* Feature card stack */
+.stack {
+  position: absolute;
+  left: 1001px;
+  top: 149px;
+  width: 367px;
+}
+
+.feature {
+  position: relative;
+  height: 396px;
+  margin-bottom: 16px;
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+
+.feature[data-tone="dark"] {
+  background: var(--ink);
+}
+
+.featureThumb {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 6px;
+  height: 241px;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.featureImage {
+  object-fit: cover;
+}
+
+.featureInset {
+  position: absolute;
+  left: -42px;
+  top: -35px;
+  width: 439px;
+  height: 311px;
+  max-width: none;
+  object-fit: cover;
+}
+
+.featureBody {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 277px;
+  padding-inline: 20px;
+}
+
+.featureHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 16.3px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+  line-height: 20px;
+}
+
+.featureIndex {
+  color: var(--grey);
+}
+
+.featureCopy {
+  max-width: var(--copy-w, 246px);
+  margin-top: 20px;
+  color: var(--grey);
+  font-size: 16px;
+  letter-spacing: -0.96px;
+  line-height: 24px;
+}
+
+.feature[data-tone="light"] .featureHead {
+  color: var(--ink);
+}
+
+.feature[data-tone="dark"] .featureHead {
+  color: #fff;
+}
+
+.feature[data-tone="dark"] .featureIndex,
+.feature[data-tone="dark"] .featureCopy {
+  color: var(--silver);
+}
+
+@media (max-width: 1400px) {
+  .stack {
+    left: auto;
+    right: 72px;
+  }
+
+  .plot {
+    display: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  .section {
+    min-height: 0;
+    padding: 96px var(--gutter);
+  }
+
+  .inner {
+    display: block;
+  }
+
+  .heading {
+    font-size: clamp(34px, 5.4vw, 54px);
+    line-height: 1.16;
+  }
+
+  .stack {
+    position: static;
+    width: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 56px;
+  }
+
+  .feature {
+    margin-bottom: 0;
+  }
+
+  .featureInset {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* The Figma crop is far too tight for a narrow section — fill it instead. */
+  .map {
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .section {
+    padding: 72px var(--gutter);
+  }
+
+  .body {
+    letter-spacing: -0.2px;
+    line-height: 1.55;
+  }
+
+  .body br {
+    display: none;
+  }
+
+  .regions {
+    gap: 20px;
+    padding-top: 12px;
+  }
+
+  .marker {
+    width: 46px;
+    height: 46px;
+    font-size: 16px;
+  }
+
+  .featureCopy {
+    letter-spacing: -0.3px;
+  }
+}

@@ -1,0 +1,101 @@
+/* Figma node 5:2409 "Stats Row" — three 438.66 x 292 cards, 20px apart. */
+.section {
+  padding-top: 72px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  position: relative;
+  min-height: 292px;
+  border-radius: 19px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.photo {
+  object-fit: cover;
+  object-position: 50% 50%;
+  z-index: -1;
+}
+
+.body {
+  padding: 28px;
+}
+
+.value {
+  font-size: 67px;
+  line-height: 67px;
+  letter-spacing: -1px;
+}
+
+.label {
+  margin-top: 4px;
+  font-size: 16.6px;
+  letter-spacing: -0.36px;
+  line-height: 20px;
+}
+
+.description {
+  margin-top: 67px;
+  font-size: 16px;
+  letter-spacing: -0.96px;
+  line-height: 24px;
+}
+
+.card[data-tone="light"] .value,
+.card[data-tone="light"] .label {
+  color: var(--ink);
+}
+
+.card[data-tone="light"] .description {
+  color: var(--slate);
+}
+
+.card[data-tone="dark"] .value,
+.card[data-tone="dark"] .label {
+  color: #fff;
+}
+
+.card[data-tone="dark"] .description {
+  color: var(--off-white);
+}
+
+@media (max-width: 1024px) {
+  .value {
+    font-size: 56px;
+    line-height: 60px;
+  }
+
+  .description {
+    margin-top: 40px;
+    letter-spacing: -0.4px;
+  }
+}
+
+@media (max-width: 780px) {
+  .section {
+    padding-top: 48px;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .card {
+    min-height: 240px;
+  }
+
+  .body {
+    padding: 24px;
+  }
+
+  .description {
+    margin-top: 28px;
+  }
+}

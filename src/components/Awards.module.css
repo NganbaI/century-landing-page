@@ -1,0 +1,110 @@
+/* Awards band — Figma content y 3898 → 4489 (591 tall). */
+.section {
+  position: relative;
+  height: 591px;
+  margin-top: 98px;
+}
+
+.scatter {
+  position: absolute;
+  inset: 0;
+}
+
+.card {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 356px;
+  padding: 28px;
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+
+.cardTitle {
+  width: 300px;
+  color: var(--ink);
+  font-size: 28px;
+  letter-spacing: -0.6px;
+  line-height: 36px;
+}
+
+.cardMeta {
+  margin-top: 20px;
+  color: var(--slate);
+  font-size: 34px;
+  letter-spacing: -0.6px;
+  line-height: 36px;
+  white-space: nowrap;
+}
+
+/* Figma node 5:2712 — sits above the scatter. */
+.heading {
+  position: absolute;
+  left: 50%;
+  top: 255.17px;
+  transform: translate(-50%, -50%);
+  color: var(--crimson);
+  font-weight: 600;
+  font-size: 83.4px;
+  letter-spacing: -2.4px;
+  line-height: 60px;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+@media (max-width: 1440px) {
+  .scatter {
+    left: 50%;
+    width: 1440px;
+    margin-left: -720px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .section {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin-top: 72px;
+    padding: 0 var(--gutter);
+  }
+
+  .scatter {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    width: auto;
+    margin: 0;
+  }
+
+  .card {
+    position: static;
+    width: auto;
+  }
+
+  .cardTitle {
+    width: auto;
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .cardMeta {
+    margin-top: 12px;
+    font-size: 26px;
+    line-height: 30px;
+    white-space: normal;
+  }
+
+  .heading {
+    position: static;
+    order: -1;
+    transform: none;
+    margin: 0 0 32px;
+    font-size: clamp(32px, 6.4vw, 83.4px);
+    line-height: 1.06;
+    letter-spacing: -1.2px;
+    text-align: center;
+    white-space: normal;
+  }
+}

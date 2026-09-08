@@ -1,0 +1,299 @@
+/* Figma node 5:2763 "Footer - Desktop" — 805 tall, overlaps the section
+   above by 24.2px and rounds its top corners. */
+.footer {
+  position: relative;
+  z-index: 2;
+  margin-top: -24.2px;
+  background: var(--crimson);
+  border-top-left-radius: var(--radius-card);
+  border-top-right-radius: var(--radius-card);
+  overflow: hidden;
+  color: #fff;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: 161px 30px 0;
+}
+
+.brand {
+  flex: none;
+  width: 417.7px;
+}
+
+.logo {
+  width: 81px;
+  height: 47px;
+  object-fit: contain;
+}
+
+.blurb {
+  margin-top: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 18px;
+  line-height: 21.6px;
+}
+
+.thumbs {
+  display: flex;
+  gap: 10px;
+  margin-top: 49.11px;
+}
+
+.thumb {
+  position: relative;
+  width: 96.92px;
+  height: 90px;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+.thumb img {
+  object-fit: cover;
+}
+
+.columns {
+  flex: none;
+  display: flex;
+  gap: 0;
+}
+
+.pages {
+  width: 301.06px;
+}
+
+.contact {
+  width: 221.06px;
+}
+
+.columnTitle {
+  font-size: 16px;
+  line-height: 19.2px;
+}
+
+.pageLists {
+  display: flex;
+  gap: 43px;
+  margin-top: 29.8px;
+}
+
+.pageLists ul,
+.contact ul {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pageLists li,
+.contact li {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+  line-height: 19.2px;
+}
+
+.pageLists a[data-current="true"] {
+  color: #fff;
+}
+
+.pageLists a:hover,
+.contact a:hover {
+  color: #fff;
+}
+
+.contact ul {
+  margin-top: 29.8px;
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 1440px;
+  height: 92px;
+  margin: 50.01px auto 0;
+  padding-inline: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.84px;
+  line-height: 18.2px;
+}
+
+.socials {
+  display: flex;
+  gap: 10px;
+}
+
+.socials a {
+  display: grid;
+  place-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+.socials a:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+/* Figma node 5:2849 "Footer Bottom" — 234 tall band, photo clipped by the
+   footer, ticker riding on the blurred gradient. */
+.tickerBlock {
+  position: relative;
+  height: 234px;
+}
+
+.tickerBg {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 298.45px;
+}
+
+.tickerPhoto {
+  object-fit: cover;
+}
+
+.tickerFade {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 65px;
+  backdrop-filter: blur(2.5px);
+  background: linear-gradient(to bottom, #111510, rgba(17, 21, 16, 0));
+  mask-image: linear-gradient(to bottom, #000, rgba(0, 0, 0, 0));
+}
+
+.ticker {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  top: 20px;
+  height: 24px;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    #000 8%,
+    #000 92%,
+    rgba(0, 0, 0, 0)
+  );
+}
+
+.tickerTrack {
+  display: flex;
+  width: max-content;
+  animation: marquee 42s linear infinite;
+}
+
+.tickerRun {
+  display: flex;
+  align-items: center;
+}
+
+.tickerItem {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding-right: 30px;
+}
+
+.tickerText {
+  color: #fff;
+  font-size: 20px;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tickerTrack {
+    animation: none;
+  }
+}
+
+@media (max-width: 1200px) {
+  .info {
+    padding-top: 96px;
+  }
+
+  .columns {
+    gap: 48px;
+  }
+
+  .brand {
+    width: 340px;
+  }
+
+  .pages,
+  .contact {
+    width: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .info {
+    flex-direction: column;
+    gap: 48px;
+    padding: 72px var(--gutter) 0;
+  }
+
+  .brand {
+    width: auto;
+  }
+
+  .thumbs {
+    margin-top: 32px;
+  }
+
+  .thumb {
+    flex: 1 1 0;
+    width: auto;
+  }
+
+  .bottom {
+    height: auto;
+    margin-top: 40px;
+    padding: 24px var(--gutter);
+  }
+
+  .tickerBlock {
+    height: 190px;
+  }
+}
+
+@media (max-width: 560px) {
+  .columns {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .blurb br {
+    display: none;
+  }
+
+  .tickerText {
+    font-size: 16px;
+  }
+}

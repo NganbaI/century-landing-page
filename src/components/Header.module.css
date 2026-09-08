@@ -1,0 +1,163 @@
+/* Figma node 5:2371 "Nav Bar" — 1416 wide, 83 tall, centered over the hero. */
+.header {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  z-index: 50;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1416px;
+  height: 83px;
+  margin-inline: auto;
+  padding-inline: 30px;
+}
+
+.logo {
+  flex: none;
+  display: block;
+}
+
+.logo img {
+  width: 81px;
+  height: 47px;
+  object-fit: contain;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  margin-inline: auto;
+}
+
+.link {
+  color: #fff;
+  font-size: 16.4px;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+  line-height: 20px;
+  position: relative;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.link:hover::after {
+  transform: scaleX(1);
+}
+
+.cta {
+  flex: none;
+  width: 171px;
+  height: 53px;
+  font-size: 16.5px;
+  padding: 0;
+}
+
+/* Mobile trigger */
+.burger {
+  display: none;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  padding: 0;
+}
+
+.burgerBox {
+  display: grid;
+  place-content: center;
+  gap: 5px;
+  width: 100%;
+  height: 100%;
+}
+
+.burgerBox span {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background: #fff;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.burgerBox[data-open="true"] span:first-child {
+  transform: translateY(3.25px) rotate(45deg);
+}
+
+.burgerBox[data-open="true"] span:last-child {
+  transform: translateY(-3.25px) rotate(-45deg);
+}
+
+.panel {
+  display: none;
+}
+
+.panelLink {
+  display: block;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.panelCta {
+  width: 100%;
+  margin-top: 28px;
+}
+
+@media (max-width: 1080px) {
+  .menu {
+    gap: 34px;
+  }
+
+  .cta {
+    width: 148px;
+    height: 48px;
+  }
+}
+
+@media (max-width: 900px) {
+  .bar {
+    height: 76px;
+    padding-inline: var(--gutter);
+  }
+
+  .menu,
+  .cta {
+    display: none;
+  }
+
+  .burger {
+    display: block;
+  }
+
+  .panel {
+    display: block;
+    padding: 8px var(--gutter) 40px;
+    background: rgba(11, 16, 20, 0.96);
+    backdrop-filter: blur(12px);
+  }
+
+  .panel[data-open="false"] {
+    display: none;
+  }
+}
